@@ -1,0 +1,93 @@
+iMPACT Version: Oct 13 2013 08:43:40
+
+iMPACT log file Started on Thu Apr  1 00:59:14 2021
+
+Preference Table
+Name                 Setting             
+StartupClock         Auto_Correction     
+AutoSignature        False               
+KeepSVF              False               
+ConcurrentMode       False               
+UseHighz             False               
+ConfigOnFailure      Stop                
+UserLevel            Novice              
+MessageLevel         Detailed            
+svfUseTime           false               
+SpiByteSwap          Auto_Correction     
+AutoInfer            false               
+SvfPlayDisplayComments false               
+Enumerating cables. Please wait.
+Connecting to cable (Usb Port - USB21).
+Checking cable driver.
+ Using libusb.
+ Kernel release = 3.13.0-33-generic.
+Downloading/groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/Xilinx3/14.7/ISE_DS/ISE/data/xusb_xlp.hex.
+Downloaded firmware version = 1303.
+=======================================================
+Found cable - > ESN = 000014D3697101.
+=======================================================
+Connecting to cable (Usb Port - USB22).
+Checking cable driver.
+ Using libusb.
+ Kernel release = 3.13.0-33-generic.
+Connecting to cable (Usb Port - USB21).
+Checking cable driver.
+File version of/groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/Xilinx3/14.7/ISE_DS/ISE/bin/lin64/xusbdfwu.hex = 1030.
+File version of /usr/share/xusbdfwu.hex = 1030.
+ Using libusb.
+ Kernel release = 3.13.0-33-generic.
+ Max current requested during enumeration is 60 mA.
+Type = 0x0004.
+ Cable Type = 3, Revision = 0.
+ Setting cable speed to 6 MHz.
+Cable connection established.
+Firmware version = 1303.
+File version of/groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/Xilinx3/14.7/ISE_DS/ISE/data/xusb_xlp.hex = 1303.
+Firmware hex file version = 1303.
+PLD file version = 0012h.
+ PLD version = 0012h.
+Type = 0x0004.
+ESN option: 000014D3697101.
+Identifying chain contents...'0': : Manufacturer's ID = Xilinx xc4vfx100, Version : 6
+INFO:iMPACT:1777 - 
+   Reading   /groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/Xilinx3/14.7/ISE_DS/ISE/vir   tex4/data/xc4vfx100.bsd...
+INFO:iMPACT:501 - '1': Added Device xc4vfx100 successfully.
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+'1': : Manufacturer's ID = Xilinx xccace, Version : 0
+INFO:iMPACT:1777 - 
+   Reading   /groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/Xilinx3/14.7/ISE_DS/ISE/ace   cf/data/xccace.bsd...
+INFO:iMPACT:501 - '1': Added Device xccace successfully.
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+done.
+Elapsed time =      1 sec.
+Elapsed time =      0 sec.
+'2': Loading file'/groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/WARP_images/download_80M_tx.bit' ...
+done.
+----------------------------------------------------------------------
+INFO:iMPACT:501 - '2': Added Device xc4vfx100 successfully.
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Maximum TCK operating frequency for this device chain: 16700000.
+Validating chain...
+Boundary-scan chain validated successfully.
+'2': Programming device...
+ Match_cycle = NoWait.
+Match cycle: NoWait
+ LCK_cycle = NoWait.
+LCK cycle: NoWait
+done.
+INFO:iMPACT:2219 - Status register values:
+INFO:iMPACT - 0011 1111 1111 1110 0000 0000 0000 0000 
+INFO:iMPACT:579 - '2': Completed downloading bit file to device.
+INFO:iMPACT:188 - '2': Programming completed successfully.
+ Match_cycle = NoWait.
+Match cycle: NoWait
+ LCK_cycle = NoWait.
+LCK cycle: NoWait
+INFO:iMPACT - '2': Checking done pin....done.
+'2': Programmed successfully.
+Elapsed time =     17 sec.
+----------------------------------------------------------------------
+----------------------------------------------------------------------

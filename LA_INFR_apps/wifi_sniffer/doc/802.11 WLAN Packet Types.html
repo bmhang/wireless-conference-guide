@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><!-- saved from url=(0078)http://www.wildpackets.com/resources/compendium/wireless_lan/wlan_packet_types -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>802.11 WLAN Packet Types</title>
+
+
+<meta name="description" content="This table lists the various packet types and subtypes specified in the 802.11 WLAN standard, and describes their usage briefly. " /><!-- News feed -->
+
+
+<link rel="alternate" title="WildPackets in the News" href="http://www.wildpackets.com/rss/news.php" type="application/rss+xml" /><!-- For IE to force the favicon -->
+
+
+<link href="http://www.wildpackets.com/favicon.ico" rel="shortcut icon" type="image/x-icon" /><!-- for Google Webmaster Tools verification -->
+
+
+
+<meta name="verify-v1" content="pVH73qMk+pYcazBncTO9buOZ/X/BYev4XLFETSaPulw=" />
+<meta name="verify-v1" content="AnnqMlY8hW2zkyrfUbQ24V7NCEwetKcDPQNaDhhjpO4=" /><!-- for Windows Bing Webmaster Tools verification -->
+
+
+<meta name="msvalidate.01" content="26C43984D35A8EB531C6A408D89FC887" /><!-- for Yahoo Site Explorer verification-->
+
+
+<meta name="y_key" content="2ee4164660e53ce0" />
+<link rel="stylesheet" href="default.css" type="text/css" />
+<div id="wrapper"><div id="main"><div id="page-content-container" style="height: 1656px;"><div id="page-content"><div style="margin-top: 20px;"><blockquote>
+  <h2>
+802.11 WLAN Packet Types
+  </h2>
+  <br />
+
+  <p>The table below lists the various packet types and subtypes
+specified in the 802.11 WLAN standard, and describes their usage
+briefly.
+  </p>
+  <br />
+
+  <p>
+  </p>
+  <div align="left">
+<table border="1" bordercolor="#a5b9cf" cellpadding="5" cellspacing="0" width="550">
+  <caption>
+Table E.1	WLAN packet types
+
+</caption>
+  <tbody><tr align="center">    <th colspan="4" rowspan="1"><br />
+<div><div align="center"><b>
+Packet Types
+</b></div></div>
+</th>
+    <th><br />
+<div><div align="center"><b>
+Usage
+</b></div></div>
+</th>
+</tr>
+  <tr align="center">    <th colspan="2" rowspan="1"><br />
+<div><div align="center"><b>
+type
+</b></div></div>
+</th>
+    <th colspan="2" rowspan="1"><br />
+<div><div align="center"><b>
+subtype
+</b></div></div>
+</th>
+    <th><br />
+<div><div align="center"><b>
+&nbsp;
+</b></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0000
+
+</td>
+    <td>
+Association Request
+
+</td>
+    <td>
+This packet is sent to an access point (in a BSS or ESS) or to any
+other peer (in an IBSS or ad hoc network). The sender must already be
+authenticated in order to gain a successful association.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0001
+
+</td>
+    <td>
+Association Response
+
+</td>
+    <td>
+This packet is sent from an access point (in a BSS or ESS) or from any
+other peer (in an IBSS or ad hoc network) in response to an association
+request packet. If the request is successful, the response will include
+the Association ID of the requester.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0010
+
+</td>
+    <td>
+Reassociation Request
+
+</td>
+    <td>
+Like an association request, but it includes information about the
+current association at the same time as it requests a new association
+(either with the original Station after some lapse of time, or with a
+new station upon moving from one BSS to another). This packet is sent
+to an access point (in a BSS or ESS) or to any other peer (in an IBSS
+or ad hoc network). The sender must already be authenticated in order
+to gain a successful association.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0011
+
+</td>
+    <td>
+Reassociation Response
+
+</td>
+    <td>
+Like an association response, but in response to a reassociation
+request. This packet is sent from an access point (in a BSS or ESS) or
+from any other peer (in an IBSS or ad hoc network) in response to a
+reassociation request packet. If the request is successful, the
+response will include the Association ID of the requester.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0100
+
+</td>
+    <td>
+Probe Request
+
+</td>
+    <td>
+Probe request is used to actively seek any, or a particular, access point or BSS.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+0101
+
+</td>
+    <td>
+Probe Response
+
+</td>
+    <td>
+Probe response replies with station parameters and supported data rates.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+1000
+
+</td>
+    <td>
+Beacon
+
+</td>
+    <td>
+Beacon packets are sent by the access point in a BSS (or its equivalent
+in an IBSS) to announce the beginning of a Contention Free period (CF),
+during which the right to transmit is conferred by the access point by
+polling. Beacon management packets carry BSS timestamps to help
+synchronize member stations with the BSS, and other information to help
+them locate and choose the BSS with the best signal and availability.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+1001
+
+</td>
+    <td>
+ATIM
+
+</td>
+    <td>
+Announcement Traffic Indication Message. This packet serves much the
+same function in an IBSS that the Beacon packet does in an
+infrastructure (BSS or ESS) topology. The packet sets the
+synchronization of the group and announces that messages are waiting to
+be delivered. Stations in Power Save mode wake up periodically to
+listen for ATIM packets in ad hoc (IBSS) networks, just as they do for
+Beacon packets in infrastructure (BSS or ESS) networks.
+</td>
+</tr>
+  <tr>
+      <td style="vertical-align: top;"><br />
+      </td>
+      <td style="vertical-align: top;"><br />
+      </td>
+      <td style="vertical-align: top;"><br />
+      </td>
+      <td style="vertical-align: top;"><br />
+      </td>
+      <td style="vertical-align: top;"><br />
+      </td>
+    </tr>
+<tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+1010
+
+</td>
+    <td>
+Disassociation
+
+</td>
+    <td>
+This packet is an announcement breaking an existing association. It is
+a one-way communication (meaning it does not require or accept a
+reply), and must be accepted. It can be sent by any associated station
+or BSS and it takes effect immediately.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+1011
+
+</td>
+    <td>
+Authentication
+
+</td>
+    <td>
+Authentication packets are sent back and forth between the station
+requesting authentication and the station to which it is attempting to
+assert its authentic identity. The number of packets exchanged depends
+on the authentication method employed. Information relating to the
+particular scheme is carried in the body of the Authentication packet.
+</td>
+</tr>
+  <tr align="left">    <td>
+00
+
+</td>
+    <td>
+mgmt
+
+</td>
+    <td>
+1100
+
+</td>
+    <td>
+Deauthentication
+
+</td>
+    <td>
+This packet is an announcement stating that the receiver is no longer
+authenticated. It is a one-way communication from the authenticating
+station (a BSS or functional equivalent), and must be accepted. It
+takes effect immediately.
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1010
+
+</td>
+    <td>
+PS-Poll
+
+</td>
+    <td>
+Power Save polling packet. Stations in power save mode awaken
+periodically to listen to selected Beacons. If they hear that data is
+waiting for them, they will awake more fully and send a PS-Poll packet
+to the access point (BSS) to request the transmission of this waiting
+data. In Control packets of the Power Save-Poll type, the Duration/ID
+field contains the association ID (AID) for the station sending the
+packet.
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1011
+
+</td>
+    <td>
+RTS
+
+</td>
+    <td>
+Request To Send. Coordinates access to airwaves.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1100
+
+</td>
+    <td>
+CTS
+
+</td>
+    <td>
+Clear To Send. Response to a RTS, coordinates access to airwaves.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1101
+
+</td>
+    <td>
+ACK
+
+</td>
+    <td>
+Acknowledges receipt of transmitted data.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1110
+
+</td>
+    <td>
+CF End
+
+</td>
+    <td>
+Signals the end of Contention Free period.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+01
+
+</td>
+    <td>
+ctrl
+
+</td>
+    <td>
+1111
+
+</td>
+    <td>
+CF End + CF ACK
+
+</td>
+    <td>
+Signals the end of the Contention Free period and Acknowledges the receipt of some packet in a single message.
+
+</td>
+</tr>
+  <tr align="left">    <td>
+10
+
+</td>
+    <td>
+data
+
+</td>
+    <td>
+any
+
+</td>
+    <td>
+any
+
+</td>
+    <td>
+Multiple subtypes exist for Data type packets, but all have the same basic format, as described above. (<a href="http://www.wildpackets.com/resources/compendium/manual_appendices/nxA1_AP#wp1001864">see Appendix C, "802.11 WLAN Packets and Protocols"</a>.) The
+different Data subtypes essentially just piggyback CF-Poll, CF-ACK, and
+CF-End messages onto the data message in a single transmission. This
+allows the BSS to gain higher throughputs possible using PCF (point
+coordinating function).
+</td>
+</tr>
+</tbody></table>
+  </div>
+<p>
+
+</p>
+    </blockquote>				</div>
+			</div>
+		</div>
+	</div><br />
+</div>
+
+
+
+
+
+
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all no-close" tabindex="-1" role="dialog" aria-labelledby="ui-id-1" style="display: none; outline-color: invert; outline-style: none; outline-width: 0px; z-index: 1000;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-1" class="ui-dialog-title">WildPackets Download</span><a href="http://www.wildpackets.com/resources/compendium/wireless_lan/wlan_packet_types#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="gatekeeper-dialog" class="ui-dialog-content ui-widget-content">
+	<iframe id="modalIframeId" marginwidth="0" marginheight="0" title="Dialog Title" src="./802.11%20WLAN%20Packet%20Types_files/gatekeeper_blank.html" frameborder="0" height="100%" scrolling="no" width="100%" />
+</div></div><div class="piro_overlay" style="display: none; opacity: 0.4;" /><table class="piro_html ui-draggable" style="left: 358px; top: 175px; display: none;" cellpadding="0" cellspacing="0"><tbody><tr><td class="h_t_l"><br />
+</td><td class="h_t_c" title="drag me!!"><br />
+</td><td class="h_t_r"><br />
+</td></tr><tr><td class="h_c_l"><br />
+</td><td class="h_c_c"><div class="piro_loader" title="close"><span /></div><div class="resize"><div class="nav_container" style="display: none;"><a href="http://www.wildpackets.com/resources/compendium/wireless_lan/wlan_packet_types#prev" class="piro_prev" title="previous" /><a href="http://www.wildpackets.com/resources/compendium/wireless_lan/wlan_packet_types#next" class="piro_next" title="next" /><div class="piro_prev_fake">prev</div><div class="piro_next_fake">next</div><div class="piro_close" title="close" /></div><div class="caption" style="display: none;" /><div class="div_reg" /></div><br />
+</td><td class="h_c_r"><br />
+</td></tr><tr><td class="h_b_l"><br />
+</td><td class="h_b_c"><br />
+</td><td class="h_b_r"><br />
+</td></tr></tbody></table></body></html>

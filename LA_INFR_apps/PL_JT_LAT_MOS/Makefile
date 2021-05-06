@@ -1,0 +1,19 @@
+CFLAGS = -g -Wall
+LIBS = -ltrace -lopus -lspeex
+INCLUDES = -I/usr/include/opus
+MYSQL_INCLUDE = `mysql_config --cflags --libs`
+
+all: PL_JT_LAT_MOS_RAW PL_JT_LAT_MOS_DGRAM PL_JT_LAT_MOS_parser
+
+PL_JT_LAT_MOS_DGRAM: PL_JT_LAT_MOS_DGRAM.c
+	gcc $(CFLAGS) -o PL_JT_LAT_MOS_DGRAM PL_JT_LAT_MOS_DGRAM.c $(INCLUDES) $(LIBS) $(MYSQL_INCLUDE)
+
+PL_JT_LAT_MOS_RAW: PL_JT_LAT_MOS_RAW.c
+	gcc $(CFLAGS) -o PL_JT_LAT_MOS_RAW PL_JT_LAT_MOS_RAW.c $(INCLUDES) $(LIBS) $(MYSQL_INCLUDE)
+
+PL_JT_LAT_MOS_parser: PL_JT_LAT_MOS_parser.c
+	gcc $(CFLAGS) -o PL_JT_LAT_MOS_parser PL_JT_LAT_MOS_parser.c $(MYSQL_INCLUDE)
+
+clean:
+	rm -f PL_JT_LAT_MOS_RAW PL_JT_LAT_MOS_DGRAM PL_JT_LAT_MOS_parser
+	

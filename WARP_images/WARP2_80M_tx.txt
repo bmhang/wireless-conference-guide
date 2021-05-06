@@ -1,0 +1,7 @@
+setMode -bs
+setCable -port usb22 -esn 000014D3697101
+Identify -inferir
+assignFile -p 2 -file "/groups/ilabt-imec-be/asu-conf-la/wirelessConfExp/WARP_images/download_80M_tx.bit"
+Program -p 2
+Quit
+

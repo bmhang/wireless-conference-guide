@@ -1,0 +1,7 @@
+setMode -bs
+setCable -port usb22 -esn 000014D379DD01
+Identify -inferir
+assignFile -p 2 -file "download_40M_tx.bit"
+Program -p 2
+Quit
+

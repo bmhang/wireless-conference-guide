@@ -1,0 +1,7 @@
+setMode -bs
+setCable -port usb21 -esn 000014D3698501
+Identify -inferir
+assignFile -p 2 -file "download_80M_tx.bit"
+Program -p 2
+Quit
+
