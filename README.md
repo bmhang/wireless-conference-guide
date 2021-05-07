@@ -24,9 +24,9 @@ Requirements:
 
 The first thing to do is to swap in some nodes on wilab. For more detailed instructions on how to swap in nodes, please refer to the w.iLab.t documentation [here](https://doc.ilabt.imec.be/ilabt/wilab/getting_started.html "here"). In this repository is a file named `small_exp41_3.rspec`. This file can be opened with jFed Experimenter and has already configured a small topology of nodes to be used. Simply duplicate the Zotac nodes to increase the size of the experiment.
 
-### Xilinx
+### Xilinx iMPACT
 
-(NEEDS UPDATING) You have to install Xilinx next, and I didn't do this part before. Daniel, you're welcome to add here as you can remember!
+The Xilinx iMPACT application is used to program the Warp type software defined radios (SDRs) on the testbed. This guide assumes that the user already has prior knowledge of SDRs and programming the Warp nodes using this application. iMPACT is included in the Xilinx ISE package, which can be downloaded [here](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive-ise.html). We suggest using version 14.7, although others will most likely work as well. If the entire package is not needed, it is possible that the Lab Tools: Standalone package should cover the basic needs of programming the Warp SDR. 
 
 ### Clone BEOF
 
@@ -40,16 +40,14 @@ Preparing this experiment comes with four distinct phases:
 - Set up the `LA_INFR.sh` file
 - Begin the experiment from a Zotac node.
 
-Each of these phases will now be described in detail.
+We now describe each of the phases in detail. 
 
 ### Setting up the Warp Node
 
 To prepare the Warp node, open `setup_WARP.sh`, located inside the `setup` folder.
-1. Edit the `SETUP_PATH` to the path where your `setup` folder is located.
-2. On line 5, change the path to the `WARP_images` folder to where it is located for you. 
-3. On line 6, change the username to your username.
-4. (NEEDS UPDATING) On line 8, change the path to your installation of Xilinx. Also, change the path to your `WARP_images` folder and specify the Warp file to use. For example, if you swapped in ZotacG3 and Warp2, you would use the `WARP2_80M_tx.txt` file. If you swapped in Warp1 or Warp3, change the path to the corresponding file.
-5. Open an SSH terminal into the Zotac node associated with your Warp node. For example, you would SSH into ZotacG3 if you swapped in Warp2. From your Zotac node, execute `setup_WARP.sh` and allow the process to complete.
+1. Change the `IMPACT_PATH` on line 3 to be the location of the `impact` application installed for your node.
+2. Change the `IMAGE_PATH` on line 4 to be the location where your WARP images are stored. Ensure that you are using the correct Warp image for the Warp node you are using (i.e. for Warp2 you would use the `WARP2_80M_tx.txt` file).
+3. Open an SSH terminal into the Zotac node associated with your Warp node. For example, you would SSH into ZotacG3 if you swapped in Warp2. From your Zotac node, execute `setup_WARP.sh` and allow the process to complete.
 
 ### Setting up a MySQL Database on the Server Node
 
@@ -60,299 +58,13 @@ This experiment requires a MySQL database to store experiment data before output
 These commands must be run on the server node you swapped in. In the example file provided, server3 is used.
 1. To begin, run `sudo apt-get install mysql-server`. When prompted, set the root account password to something you will remember.
 2. Create a new user with all privileges. Make note of these credentials as you will need them later.
-3. Edit the `my.cnf` file in `~/etc/mysql` and change the bind address to `0.0.0.0`. This must be done so the database can be accessed from another server.
+3. Edit the `my.cnf` file in `~/etc/mysql` and change the bind address to `0.0.0.0`. This must be done so the database can be accessed remotely.
 4. Restart the server with `sudo service mysql restart`.
 5. Create a new database called `benchmarking`.
-6. Create new tables in this database using the code provided below. There are 20 tables that need to be created.
+6. Create new tables in this database using the code provided [here](setup/my_sql_setup_code.md). There are 20 tables that need to be created.
+7. You can now exit the MySQL interface. 
 
-```
-CREATE TABLE `COR` (
-  `ts` bigint(20) NOT NULL,
-  `sniffer_mac` varchar(18) NOT NULL,
-  `freq` smallint(9) NOT NULL,
-  `COR` double NOT NULL,
-  `intval` mediumint(9) NOT NULL,
-  PRIMARY KEY (`sniffer_mac`,`ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `COR_ZIG` (
-  `ts` bigint(20) NOT NULL,
-  `sniffer_mac` varchar(18) NOT NULL,
-  `freq` smallint(9) NOT NULL,
-  `COR_Zig1` double NOT NULL,
-  `COR_Zig2` double NOT NULL,
-  `COR_Zig3` double NOT NULL,
-  `COR_Zig4` double NOT NULL,
-  `intval` mediumint(9) NOT NULL,
-  PRIMARY KEY (`sniffer_mac`,`ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `COT` (
-  `ts` varchar(20) NOT NULL,
-  `freq` mediumint(9) NOT NULL,
-  `FCS` varchar(10) NOT NULL,
-  `COT` varchar(20) NOT NULL,
-  PRIMARY KEY (`ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `MOS` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `ts` bigint(20) NOT NULL,
-  `src_mac` varchar(18) NOT NULL,
-  `sniffer_mac` varchar(18) NOT NULL,
-  `MOS` double NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `PL_JT_LAT_MOS` (
-  `ts` bigint(20) NOT NULL,
-  `src_IP\mac` varchar(18) NOT NULL,
-  `sniffer_mac` varchar(18) NOT NULL,
-  `packetLoss` double NOT NULL,
-  `jitter` double NOT NULL,
-  `latency` double NOT NULL,
-  `MOS` double NOT NULL,
-  PRIMARY KEY (`ts`,`sniffer_mac`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `RM` (
-  `ts` bigint(20) NOT NULL,
-  `client_MAC` varchar(18) NOT NULL,
-  `SSID` varchar(38) NOT NULL,
-  `AP_MAC` varchar(18) NOT NULL,
-  `freq` smallint(9) NOT NULL,
-  `auth_method` varchar(18) NOT NULL,
-  `last_state` varchar(22) NOT NULL,
-  `SCAN_time` varchar(10) NOT NULL,
-  `AUTHN_AP_time` varchar(10) NOT NULL,
-  `ASSN_AP_time` varchar(10) NOT NULL,
-  `AUTHN_RADIUS_time` varchar(10) NOT NULL,
-  `KEY_DISTR_time` varchar(10) NOT NULL,
-  `AUTHN_AP_count` varchar(5) NOT NULL,
-  `ASSN_AP_count` varchar(5) NOT NULL,
-  `AUTHN_RADIUS_count` varchar(5) NOT NULL,
-  `KEY_DISTR_count` varchar(5) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  PRIMARY KEY (`ts`,`client_MAC`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `SV` (
-  `ts` bigint(20) NOT NULL,
-  `bssid` varchar(18) NOT NULL,
-  `station` varchar(18) NOT NULL,
-  `rx_bytes` int(10) unsigned NOT NULL,
-  `rx_packets` int(10) unsigned NOT NULL,
-  `tx_bytes` int(10) unsigned NOT NULL,
-  `tx_packets` int(10) unsigned NOT NULL,
-  `tx_retries` int(10) unsigned NOT NULL,
-  `tx_failed` int(10) unsigned NOT NULL,
-  `signal` int(10) NOT NULL,
-  `tx_bitrate` float NOT NULL,
-  PRIMARY KEY (`ts`,`station`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `USRP_COR` (
-  `ts` bigint(20) NOT NULL,
-  `LOC` mediumint(9) NOT NULL,
-  `COR` float NOT NULL,
-  PRIMARY KEY (`ts`,`LOC`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `allPar` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `ts` varchar(20) NOT NULL,
-  `deviceID` int(11) NOT NULL,
-  `preamble` varchar(5) NOT NULL,
-  `rate` float unsigned NOT NULL,
-  `freq` mediumint(9) NOT NULL,
-  `bits_per_channel` smallint(6) NOT NULL,
-  `channel_type` varchar(6) NOT NULL,
-  `RSSI` smallint(8) NOT NULL,
-  `frameType` varchar(5) NOT NULL,
-  `frameSubType` varchar(30) NOT NULL,
-  `src_mac` varchar(20) NOT NULL,
-  `FCS` varchar(10) NOT NULL,
-  `frameLength` smallint(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `applicationTable` (
-  `platform` varchar(20) DEFAULT NULL,
-  `application` varchar(15) DEFAULT NULL,
-  `version` varchar(10) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `inputFormat` varchar(1024) NOT NULL,
-  `outputFormat` varchar(2048) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `bt_sniffer` (
-  `ts` bigint(20) NOT NULL,
-  `warp_id` int(11) NOT NULL,
-  `PSD0` float NOT NULL,
-  `PSD1` float NOT NULL,
-  `PSD2` float NOT NULL,
-  `PSD3` float NOT NULL,
-  `PSD4` float NOT NULL,
-  `PSD5` float NOT NULL,
-  `PSD6` float NOT NULL,
-  `PSD7` float NOT NULL,
-  `PSD8` float NOT NULL,
-  `PSD9` float NOT NULL,
-  `PSD10` float NOT NULL,
-  `PSD11` float NOT NULL,
-  `PSD12` float NOT NULL,
-  `PSD13` float NOT NULL,
-  `PSD14` float NOT NULL,
-  `PSD15` float NOT NULL,
-  `PSD16` float NOT NULL,
-  `PSD17` float NOT NULL,
-  `PSD18` float NOT NULL,
-  `PSD19` float NOT NULL,
-  `PSD20` float NOT NULL,
-  `PSD21` float NOT NULL,
-  `PSD22` float NOT NULL,
-  `PSD23` float NOT NULL,
-  `PSD24` float NOT NULL,
-  `PSD25` float NOT NULL,
-  `PSD26` float NOT NULL,
-  `PSD27` float NOT NULL,
-  `PSD28` float NOT NULL,
-  `PSD29` float NOT NULL,
-  `PSD30` float NOT NULL,
-  `PSD31` float NOT NULL,
-  `PSD32` float NOT NULL,
-  `PSD33` float NOT NULL,
-  `PSD34` float NOT NULL,
-  `PSD35` float NOT NULL,
-  `PSD36` float NOT NULL,
-  `PSD37` float NOT NULL,
-  `PSD38` float NOT NULL,
-  `PSD39` float NOT NULL,
-  `PSD40` float NOT NULL,
-  `PSD41` float NOT NULL,
-  `PSD42` float NOT NULL,
-  `PSD43` float NOT NULL,
-  `PSD44` float NOT NULL,
-  `PSD45` float NOT NULL,
-  `PSD46` float NOT NULL,
-  `PSD47` float NOT NULL,
-  `PSD48` float NOT NULL,
-  `PSD49` float NOT NULL,
-  `PSD50` float NOT NULL,
-  `PSD51` float NOT NULL,
-  `PSD52` float NOT NULL,
-  `PSD53` float NOT NULL,
-  `PSD54` float NOT NULL,
-  `PSD55` float NOT NULL,
-  `PSD56` float NOT NULL,
-  `PSD57` float NOT NULL,
-  `PSD58` float NOT NULL,
-  `PSD59` float NOT NULL,
-  `PSD60` float NOT NULL,
-  `PSD61` float NOT NULL,
-  `PSD62` float NOT NULL,
-  `PSD63` float NOT NULL,
-  `PSD64` float NOT NULL,
-  `PSD65` float NOT NULL,
-  `PSD66` float NOT NULL,
-  `PSD67` float NOT NULL,
-  `PSD68` float NOT NULL,
-  `PSD69` float NOT NULL,
-  `PSD70` float NOT NULL,
-  `PSD71` float NOT NULL,
-  `PSD72` float NOT NULL,
-  `PSD73` float NOT NULL,
-  `PSD74` float NOT NULL,
-  `PSD75` float NOT NULL,
-  `PSD76` float NOT NULL,
-  `PSD77` float NOT NULL,
-  `PSD78` float NOT NULL,
-  PRIMARY KEY (`ts`,`warp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `factual_qos` (
-  `qos_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `link_id` int(11) unsigned NOT NULL,
-  `ts` varchar(20) NOT NULL,
-  `app_id` tinyint(4) unsigned NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `packetCount` smallint(6) NOT NULL,
-  `MOS` varchar(20) NOT NULL,
-  PRIMARY KEY (`qos_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `hardConfigTable` (
-  `node` varchar(10) NOT NULL,
-  `interface` varchar(20) NOT NULL,
-  `mode` varchar(30) NOT NULL,
-  `channel` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `imageTable` (
-  `platform` varchar(20) NOT NULL,
-  `image` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `link_desc` (
-  `link_id` int(10) NOT NULL AUTO_INCREMENT,
-  `TxNode` varchar(16) DEFAULT NULL,
-  `RxNode` varchar(16) DEFAULT NULL,
-  `technology` varchar(10) DEFAULT NULL,
-  `freq` int(10) DEFAULT NULL,
-  PRIMARY KEY (`link_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `nodeInfoTable` (
-  `node` varchar(5) NOT NULL,
-  `xPos` int(11) NOT NULL,
-  `yPos` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `ping_stat` (
-  `ts` bigint(20) NOT NULL,
-  `hostIP` varchar(18) NOT NULL,
-  `rtt` float NOT NULL,
-  PRIMARY KEY (`ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-REATE TABLE `platformTable` (
-  `platform` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `wifi_sniffer` (
-  `ts` bigint(20) NOT NULL,
-  `sniffer_mac` varchar(18) NOT NULL,
-  `rate` float unsigned NOT NULL,
-  `freq` mediumint(9) NOT NULL,
-  `SSI` smallint(8) NOT NULL,
-  `frame_type` tinyint(4) NOT NULL,
-  `frame_subtype` tinyint(4) NOT NULL,
-  `flag` smallint(6) NOT NULL,
-  `dst_mac` varchar(18) NOT NULL,
-  `src_mac` varchar(18) NOT NULL,
-  `frag_no` smallint(6) NOT NULL,
-  `seq_no` mediumint(9) NOT NULL,
-  `COT` float NOT NULL,
-  `FCS` varchar(10) NOT NULL,
-  `frameLength` smallint(8) unsigned NOT NULL,
-  PRIMARY KEY (`ts`,`sniffer_mac`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `zigbee_trace` (
-  `deviceID` tinyint(3) unsigned NOT NULL,
-  `channelID` tinyint(3) unsigned NOT NULL,
-  `ts` double NOT NULL,
-  `rssi` smallint(6) NOT NULL,
-  `seqNo` smallint(5) unsigned NOT NULL,
-  `dst_pan` varchar(4) NOT NULL,
-  `dst_addr` varchar(16) NOT NULL,
-  `src_pan` varchar(4) NOT NULL,
-  `src_addr` varchar(16) NOT NULL,
-  PRIMARY KEY (`deviceID`,`ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-```
-
-You can now exit the MySQL interface. Setting up a MySQL database can be time consuming, so it is recommended that you create a disk image once you complete this step. This can be done by right-clicking a node in jFed and selecting "Create Image." Be sure to check the "Save System Users in Image" checkbox.
+Setting up a MySQL database can be time consuming, so it is recommended that you create a disk image once you complete this step. This will ensure that the experiment can be swapped in and out without needing to repeat this process. This can be done by right-clicking a node in jFed and selecting "Create Image." Be sure to check the "Save System Users in Image" checkbox. Make sure to use this image the next time you swap in the experiment. 
 
 When loading your MySQL database from the disk image, you may not be able to start the server (`sudo service mysql start`). If this is the case, the following command should be run:
 
@@ -365,13 +77,13 @@ sudo adduser --disabled-password --gecos "" mysql && sudo chown mysql:mysql -R /
 Open an SSH terminal into the Zotac node you want to use as the Experiment Controller. Then open 'LA_INFR.sh'.
 1. On line 3, change the directory to your location of the BEOF folder.
 2. On line 5, change the IP address to that of the node you want to use as the Experiment Controller (EC). That should be the node you are currently logged into. The IP address can be found by entering `ifconfig -a`. Use the IP address of the first wireless interface.
-3. On line 22, edit the `SPEAKER_node` value with the last digit(s) of the IP address of the speaker node. The speaker node must be one of the Zotac nodes.
-4. Edit the `LISTENER_nodes` variable with the last digit(s) of the IP addresses of the listener nodes. The listener nodes are all Zotac nodes swapped in excluding the speaker node. Put a space between the values of each node.
-5. Edit the `SNIFFER_nodes` variable with the last digit(s) of the IP addresses of sniffer nodes. Sniffer nodes are all Zotac nodes (including the speaker node).
-6. Edit the `INTRF_nodes` variable with the last digit of the IP address of the server node.
+3. On line 22, edit the `SPEAKER_node` value with the last octet of the IP address of the speaker node (i.e. if the IP address is 127.0.0.25, you would put 25). The speaker node must be one of the Zotac nodes.
+4. Edit the `LISTENER_nodes` variable with the last octet (as in step 3) of the IP addresses of the listener nodes. The listener nodes are all Zotac nodes swapped in excluding the speaker node. Put a space between the values of each node.
+5. Edit the `SNIFFER_nodes` variable with the last octet (as in steps 3 and 4) of the IP addresses of sniffer nodes. Sniffer nodes are all Zotac nodes (including the speaker node).
+6. Edit the `INTRF_nodes` variable with the last octet of the IP address of the server node.
 7. Scroll down until you see a comment labeled `database parameters`. Edit the `HOST`, `USER`, `PASSWD`, and `DB` values with the IP address of the server hosting the MySQL database, the username and password for the user you created with all privileges, and the name of the database (which should remain `benchmarking`).
 
-Save these changes. Then execute the `setup_EC.sh` file inside the `setup` folder.
+Save these changes. Then execute the `setup_EC.sh` file inside the `setup` folder to set up the experiment controller.
 
 ## Executing the Experiment and Retrieving Results
 
@@ -381,7 +93,38 @@ Results will be generated in the home folder of the Experiment Controller, e.g. 
 
 ## Other Notes
 
-There is a known issue with this experiment that can cause the experiment to hang indefinitely when a large number of Zotac nodes (e.g. >8) are swapped in.
+The ultimate goal for this experiment is to use a large number of nodes (30+) as listener nodes to increase the complexity of the scenario. However, there is a known issue with this experiment that can cause the experiment to hang indefinitely when a large number of Zotac nodes (e.g. >8) are swapped in. For demonstration purposes, please limit the number of listener nodes to eight or less for the experiment to complete successfully. 
+
+## Running Analysis
+
+(NEEDS UPDATING) -- Need to replace the different responses, LAs, and folders with the proper ones for this experiment. We also need to add in a section about parsing the results. We need to add in the "real" locating array, since the ones used here are already converted to factor levels. Additionally, I am unsure how I did the shuffling for the LAs in ``experiment_LAs``, so I will either need to figure that out or write a program to reshuffle them. 
+
+This repository includes the analysis tool for locating array based screening experiments [2]. The tool has several configurable parameters that can be used to affect the model generated. To compile the tool, navigate to the `la-analysis/` folder and run `make`. 
+
+	cd la-analysis
+	make
+
+To simplify the use of the analysis tool, we include a `run_analysis.py` script that will automatically generate models with successively increasing number of terms (up to a user specified value), and then select the best one based on when the R-squared for the new model is less than some user-specified value. We also include an `example_run_analysis.py` script that gives an example of how to pass in the parameters for the analysis script. To run the example analysis, simply run:
+
+	python3 example_run_analysis.py
+
+For non-example data, the `run_analysis.py` script takes in 7 required parameters. They are described below:
+
+- `executable_path`: This is the path to the analysis executable. If compiled directly in the repository, it is simply `"la-analysis/Search"`
+- `data_path`: This is the path to the folder containing the locating array and factor data, the output folder, and the responses folder. 
+- `LA_name`: This is the name of the locating array, without any path preceding it (assuming it is inside the data path folder)
+- `FD_name`: This is the name of the factor data file, again without any path preceding it
+- `responses_folder`: This is the path to the folder containing the response files, which in the example data here is called `"responses/"`
+- `output_folder`: This is the path to the output folder where the model output will go, which in the example data is called `"models/"`
+- `responses`: This is one or more column names from the response output file. In this case, we will pass in `Delay Jitter Throughput`, so the analysis will be run for each of the three responses in the response file. 
+
+So, to run the analysis on the example data, we could run the following command for the complete topology:
+
+	python3 run_analysis.py la-analysis/Search example_data/complete/ comp_la.tsv comp_factors.tsv responses/ models/ Delay Jitter Throughput
+
+For more information on how to run the analysis tool directly, without using the helper script, please refer to the command line output or to the README of an earlier version of the analysis here: https://github.com/sseidel16/v4-la-tools.
+
 
 ## References
 [1] R. Compton, M. T. Mehari, C. J. Colbourn, E. D. Poorer, I. Moerman, V. R. Syrotiuk, "Identifying Parameters and Interactions that impact Wireless Network Performance Efficiently," Unpublished?, October 2017.
+[2] Y. Akhtar, F. Zhang, C. J. Colbourn, J. Stufken, and V. R. Syrotiuk, “Scalable level-wise screening using locating arrays,” Unpublished manuscript, October 2020.
