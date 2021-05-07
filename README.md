@@ -352,7 +352,7 @@ CREATE TABLE `zigbee_trace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
-Setting up a MySQL database can be time consuming, so it is recommended that you create a disk image once you complete this step. This can be done by right-clicking a node in jFed and selecting "Create Image." Be sure to check the "Save System Users in Image" checkbox.
+You can now exit the MySQL interface. Setting up a MySQL database can be time consuming, so it is recommended that you create a disk image once you complete this step. This can be done by right-clicking a node in jFed and selecting "Create Image." Be sure to check the "Save System Users in Image" checkbox.
 
 When loading your MySQL database from the disk image, you may not be able to start the server (`sudo service mysql start`). If this is the case, the following command should be run:
 
