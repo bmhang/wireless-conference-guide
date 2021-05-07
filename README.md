@@ -362,7 +362,26 @@ sudo adduser --disabled-password --gecos "" mysql && sudo chown mysql:mysql -R /
 
 ### Setting Up the `LA_INFR.sh` File
 
-Open an SSH terminal into the Zotac node you want to use as the Experiment Controller. This node will not be used for the conferencing experiment.
+Open an SSH terminal into the Zotac node you want to use as the Experiment Controller. Then open 'LA_INFR.sh'.
+1. On line 3, change the directory to your location of the BEOF folder.
+2. On line 5, change the IP address to that of the node you want to use as the Experiment Controller (EC). That should be the node you are currently logged into. The IP address can be found by entering `ifconfig -a`. Use the IP address of the first wireless interface.
+3. On line 22, edit the `SPEAKER_node` value with the last digit(s) of the IP address of the speaker node. The speaker node must be one of the Zotac nodes.
+4. Edit the `LISTENER_nodes` variable with the last digit(s) of the IP addresses of the listener nodes. The listener nodes are all Zotac nodes swapped in excluding the speaker node. Put a space between the values of each node.
+5. Edit the `SNIFFER_nodes` variable with the last digit(s) of the IP addresses of sniffer nodes. Sniffer nodes are all Zotac nodes (including the speaker node).
+6. Edit the `INTRF_nodes` variable with the last digit of the IP address of the server node.
+7. Scroll down until you see a comment labeled `database parameters`. Edit the `HOST`, `USER`, `PASSWD`, and `DB` values with the IP address of the server hosting the MySQL database, the username and password for the user you created with all privileges, and the name of the database (which should remain `benchmarking`).
+
+Save these changes. Then execute the `setup_EC.sh` file inside the `setup` folder.
+
+## Executing the Experiment and Retrieving Results
+
+To run the experiment, execute `LA_INFR.sh` on the node you designated the Experiment Controller.
+
+Results will be generated in the home folder of the Experiment Controller, e.g. `~/BEOF/tmp`. There will be a file for every Zotac node in the experiment. Each file will be named based on the hardware address of the node's first wireless interface. Be sure to save these results before swapping the experiment out or they will be lost.
+
+## Other Notes
+
+There is a known issue with this experiment that can cause the experiment to hang indefinitely when a large number of Zotac nodes (e.g. >8) are swapped in.
 
 ## References
 [1] R. Compton, M. T. Mehari, C. J. Colbourn, E. D. Poorer, I. Moerman, V. R. Syrotiuk, "Identifying Parameters and Interactions that impact Wireless Network Performance Efficiently," Unpublished?, October 2017.
