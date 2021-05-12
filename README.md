@@ -76,8 +76,8 @@ sudo adduser --disabled-password --gecos "" mysql && sudo chown mysql:mysql -R /
 
 Open an SSH terminal into the Zotac node you want to use as the Experiment Controller. Then open 'LA_INFR.sh'.
 1. On line 3, change the directory to your location of the BEOF folder.
-2. On line 5, change the IP address to that of the node you want to use as the Experiment Controller (EC). That should be the node you are currently logged into. The IP address can be found by entering `ifconfig -a`. Use the IP address of the first wireless interface.
-3. On line 22, edit the `SPEAKER_node` value with the last octet of the IP address of the speaker node (i.e. if the IP address is 127.0.0.25, you would put 25). The speaker node must be one of the Zotac nodes.
+2. On line 5, change the IP address to that of the node you want to use as the Experiment Controller (EC). That should be the node you are currently logged into. The IP address can be found by entering `ifconfig -a`. Use the IP address of the `wlan0` interface.
+3. On line 22, edit the `SPEAKER_node` value with the last octet of the IP address of the speaker node (i.e. if the IP address is 127.0.0.25, you would put 25). Use the IP address of the `wlan0` interface. The speaker node must be one of the Zotac nodes.
 4. Edit the `LISTENER_nodes` variable with the last octet (as in step 3) of the IP addresses of the listener nodes. The listener nodes are all Zotac nodes swapped in excluding the speaker node. Put a space between the values of each node.
 5. Edit the `SNIFFER_nodes` variable with the last octet (as in steps 3 and 4) of the IP addresses of sniffer nodes. Sniffer nodes are all Zotac nodes (including the speaker node).
 6. Edit the `INTRF_nodes` variable with the last octet of the IP address of the server node.
@@ -89,7 +89,7 @@ Save these changes. Then execute the `setup_EC.sh` file inside the `setup` folde
 
 To run the experiment, execute `LA_INFR.sh` on the node you designated the Experiment Controller.
 
-Results will be generated in the home folder of the Experiment Controller, e.g. `~/BEOF/tmp`. There will be a file for every Zotac node in the experiment. Each file will be named based on the hardware address of the node's first wireless interface. Be sure to save these results before swapping the experiment out or they will be lost.
+Results will be generated in the home folder of the Experiment Controller, e.g. `~/BEOF/tmp`. There will be a file for every Zotac node in the experiment. Each file will be named based on the hardware address of the node's `wlan0` interface. Be sure to save these results before swapping the experiment out or they will be lost.
 
 ## Other Notes
 
