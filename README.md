@@ -30,7 +30,7 @@ The Xilinx iMPACT application is used to program the Warp type software defined 
 
 ### Clone BEOF
 
-This experiment runs on the Bash Experiment Orchestration Framework. The BEOF repository can be found [here](https://github.com/mmehari/BEOF). Clone the repository into this folder.
+This experiment runs on the Bash Experiment Orchestration Framework. The BEOF repository can be found [here](https://github.com/mmehari/BEOF). Clone the BEOF repository onto your machine and write down the path for later use.
 
 ## Setting Up the Conferencing Experiment
 
