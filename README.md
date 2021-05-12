@@ -53,8 +53,6 @@ To prepare the Warp node, open `setup_WARP.sh`, located inside the `setup` folde
 
 This experiment requires a MySQL database to store experiment data before outputting it.
 
-(NEEDS UPDATING) I took very general notes on this, but we're going to have to go through this to make it MUCH more specific.
-
 These commands must be run on the server node you swapped in. In the example file provided, server3 is used.
 1. To begin, run `sudo apt-get install mysql-server`. When prompted, set the root account password to something you will remember.
 2. Create a new user with all privileges. Make note of these credentials as you will need them later.
